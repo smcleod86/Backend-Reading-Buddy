@@ -4,7 +4,7 @@ const db = require('../../models')
 
 const UserExperience = require('../models/Summary');
 const Book = require('../models/Book');
-const User = require*('../models/User');
+const User = require('../models/User');
 
 
 router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: {title: XXX, author: XXX, etc}, userExperienceInfo: {rating: X, status: XXXX, etc}}
@@ -42,3 +42,15 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
             res.send({error: `Error in userExperience route Create method while finding Book: ${err}`})
         })
 })
+
+router.put('/:id', (req,res) => {
+    db.UserExperience.findOneAndUpdate(req.body._id, {$set: req.body}, {new: true})
+        .then(updatedUserExperience => {
+            res.send({updatedUserExperience})
+        })
+        .catch(err => {
+            res.send({error: `Error in userExperience router Update method: ${err}`})
+        })
+})
+
+module.exports = router;
