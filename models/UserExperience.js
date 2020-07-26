@@ -10,7 +10,7 @@ let UserExperienceSchema = new mongoose.Schema({
     review: Text,
     status: {
         type: String,
-        pattern: "^started$|^reading$|^finished$"
+        pattern: "^started$|^reading$|^finished$",
         required: true
     },
     date_started: Date,
