@@ -36,9 +36,9 @@ app.get('/', function(req, res) {
 
 app.use(passport.initialize())
 //TODO: make config folder and passport page
-require('./config/passport')(passport)
+//require('./config/passport')(passport)
 //setup routes
-app.use('/users', users)
+//app.use('/users', users)
 
 //start server
 app.listen(process.env.PORT || 3001, () => console.log(`Server is running on ${process.env.PORT} and things are smooth`))
