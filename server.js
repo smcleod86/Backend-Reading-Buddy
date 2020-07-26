@@ -9,6 +9,7 @@ const app = express()
 //require routers here:
 //TODO: require routes for Books, User-experience etc...
 const users = require('./routes/users')
+const userExperiences = require('./routes/UserExperiences');
 
 //middleware for CORS requests
 app.use(function(req, res, next) {
@@ -39,6 +40,7 @@ app.use(passport.initialize())
 //require('./config/passport')(passport)
 //setup routes
 //app.use('/users', users)
+app.use('/UserExperiences', userExperiences);
 
 //start server
 app.listen(process.env.PORT || 3001, () => console.log(`Server is running on ${process.env.PORT} and things are smooth`))
