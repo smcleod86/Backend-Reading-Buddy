@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router()
 
+//const db = require('../../models')
+
 const UserExperience = require('../models/UserExperience');
 const Book = require('../models/Book');
 const User = require('../models/User');
@@ -9,6 +11,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
 
     const createUserExperience = (bookId) => {    // will be called later in the route, depending on whether the relevant Book is found or created
         req.body.userExperienceInfo.bookId = bookId;
+
         UserExperience.create(req.body.userExperienceInfo) 
         // may want to refactor later to make sure bookId&userId combo is unique, so that user doesn't accidentally review the same book twice
         .then(createdUserExperience => {
