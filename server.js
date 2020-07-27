@@ -9,6 +9,7 @@ const app = express()
 //require routers here:
 //TODO: require routes for Books, User-experience etc...
 const users = require('./routes/users')
+const userExperiences = require('./routes/UserExperiences')
 
 //middleware for CORS requests
 app.use(function(req, res, next) {

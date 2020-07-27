@@ -20,9 +20,9 @@ const BookSchema = new Schema({
         type: String,
     },
     description: {
-        type: Text,
+        type: String,
     },
-    summaries: Array,
+    userExperiences: Array,
 })
 
 module.exports = Book = mongoose.model('Book', BookSchema)

@@ -42,3 +42,5 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
             res.send({error: `Error in userExperience route Create method while finding Book: ${err}`})
         })
 })
+
+module.exports = router
