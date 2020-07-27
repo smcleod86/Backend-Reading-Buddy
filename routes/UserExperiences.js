@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router()
-//const db = require('../../models')
 
 const UserExperience = require('../models/UserExperience');
 const Book = require('../models/Book');
@@ -49,7 +48,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
 })
 
 router.put('/:id', (req,res) => {
-    UserExperience.findOneAndUpdate(req.body._id, {$set: req.body}, {new: true})
+    UserExperience.findOneAndUpdate(req.params.id, {$set: req.body}, {new: true, runValidators: true})
         .then(updatedUserExperience => {
             res.send({updatedUserExperience})
         })
