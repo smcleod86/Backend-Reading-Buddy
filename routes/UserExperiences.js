@@ -13,7 +13,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
         UserExperience.create(req.body.userExperienceInfo) 
         // may want to refactor later to make sure bookId&userId combo is unique, so that user doesn't accidentally review the same book twice
         .then(createdUserExperience => {
-            Book.findOneAndUpdate(createdUserExperience.bookId, {$push: {userExperiences: createdUserExperience._id}})
+            Book.findOneAndUpdate({_id: createdUserExperience.bookId}, {$push: {userExperiences: createdUserExperience._id}})
             .then(bookUpdateResult => {
                 res.send({createdUserExperience})
             })
@@ -27,7 +27,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
     }
 
     //Look for book with same title as new userExperience's book.  If it doesn't exist, create it.  Return its id here,
-    //then create the new userExperience using the above function.
+    //then create the new userExperience, and then update the Book with the experience's ID, using the above function.
     Book.findOne({title: req.body.bookInfo.title})
         .select("_id")
         .then(foundBook => {
