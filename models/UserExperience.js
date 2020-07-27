@@ -3,14 +3,14 @@ let mongoose = require('mongoose');
 
 let UserExperienceSchema = new mongoose.Schema({
     rating: {
-        type: Integer,
+        type: Number,
         minimum: 0,
         maximum: 5
     },
-    review: Text,
+    review: String,
     status: {
         type: String,
-        pattern: "^started$|^reading$|^finished$",
+        pattern: "^wishlist$|^started$|^finished$",
         required: true
     },
     date_started: Date,
