@@ -23,7 +23,7 @@ const UserSchema = new Schema({
       type: String,
       required: true,
     },
-    summaries: Array,
+    userExperiences: Array,
     friends: Array,
     date: {
       type: Date,

@@ -10,7 +10,7 @@ let UserExperienceSchema = new mongoose.Schema({
     review: String,
     status: {
         type: String,
-        pattern: "^wishlist$|^started$|^finished$",
+        validate: /^wishlist$|^started$|^finished$/, //this validation is not currently working
         required: true
     },
     date_started: Date,
@@ -28,3 +28,6 @@ let UserExperienceSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('UserExperience', UserExperienceSchema);
+
+// May want to add validations later, say to make sure no one reviews books they haven't read, or to add finished status when people provide a date_finished
+// will have to coordinate with front end peeps

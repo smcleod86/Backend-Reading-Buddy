@@ -15,9 +15,15 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
         UserExperience.create(req.body.userExperienceInfo) 
         // may want to refactor later to make sure bookId&userId combo is unique, so that user doesn't accidentally review the same book twice
         .then(createdUserExperience => {
-            Book.findOneAndUpdate(createdUserExperience.bookId, {$push: {userExperiences: createdUserExperience._id}})
+            Book.findOneAndUpdate({_id: createdUserExperience.bookId}, {$push: {userExperiences: createdUserExperience._id}})
             .then(bookUpdateResult => {
-                res.send({createdUserExperience})
+                User.findOneAndUpdate({_id: createdUserExperience.userId}, {$push: {userExperiences: createdUserExperience._id}})
+                .then(userUpdateResult => {
+                    res.send({createdUserExperience})
+                })
+                .catch(err => {
+                    res.send({error: `Error in userExperiences create route adding experience id to user experience list: ${err}`})
+                })
             })
             .catch(err => {
                 res.send({error: `Error adding new user experience id to book userExperience list: ${err}`});
@@ -29,7 +35,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
     }
 
     //Look for book with same title as new userExperience's book.  If it doesn't exist, create it.  Return its id here,
-    //then create the new userExperience using the above function.
+    //then create the new userExperience, then update the Book with the experience's ID, then associate the User with the experience, using the above function.
     Book.findOne({title: req.body.bookInfo.title})
         .select("_id")
         .then(foundBook => {
@@ -51,7 +57,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
 })
 
 router.put('/:id', (req,res) => {
-    UserExperience.findOneAndUpdate(req.body._id, {$set: req.body}, {new: true})
+    UserExperience.findOneAndUpdate(req.params.id, {$set: req.body}, {new: true, runValidators: true})
         .then(updatedUserExperience => {
             res.send({updatedUserExperience})
         })
