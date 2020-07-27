@@ -5,17 +5,24 @@ const UserExperience = require("../models/UserExperience");
 const Book = require("../models/Book");
 const User = require("../models/User");
 
-router.get("/:id", (req,res) => {
-    Book.findById(req.params.id)
+router.get("/:api_id", (req,res) => {
+    Book.find({title: req.query.title, author: req.query.author}) // we want reviews for all editions of the book, not just the one specified by req.params.api_id
         .populate("userExperiences")
-        .then(bookInfo => {
-            res.send({bookInfo})
+        .then(booksInfo => {
+            let userExperiencesInfo = [];
+            booksInfo.forEach(book => {
+                userExperiencesInfo.concat(book.userExperiences);
+            })
+            res.send({userExperiencesInfo});
         })
         .catch(err => {
             res.send({error: `Error in books controller show route: ${err}`});
         })
 })
 
+
+// old version of Create Book - it's now handled by userExperiences controller.
+/*
 router.post("/", (req,res) => {
     Book.findOne({title: req.body.title})
     .then(foundBook => {
@@ -35,5 +42,6 @@ router.post("/", (req,res) => {
         res.send({error: `Error in books controller create route finding book: ${err}`})
     })
 })
+*/
 
 module.exports = router;
