@@ -8,11 +8,35 @@ const passport = require('passport')
 
 // load User model
 const User = require('../models/User')
+const Book = require('../models/Book')
+const UserExperience = require('../models/UserExperience')
 
 //API ROUTES
 //user test route
 router.get('/test', function(req, res) {
     res.json({msg: "Users route working"})
+})
+//Get a user by id for profiles
+router.get('/user/:id', (req, res) => {
+    User.findById({ id: req.params.id })
+        .then(user => {
+            Book.find({ userId: user.id })
+                .then(userBooks => {
+                    UserExperience.find({ userId: user.id})
+                        .then(foundUserExperience => {
+                            res.send({user}, {userBooks}, {foundUserExperience})
+                        })
+                        .catch(err => {
+                            console.log(`Error finding UserExperiences: ${err}`)
+                        })
+                })
+                .catch(err => {
+                    console.log(`Error finding user Books: ${err}`)
+                })
+        })
+        .catch(err => {
+            console.log(`Error finding User: ${err}`)
+        })
 })
 
 

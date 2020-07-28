@@ -23,6 +23,11 @@ const BookSchema = new Schema({
         type: String,
     },
     userExperiences: Array,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    }
 })
 
 module.exports = Book = mongoose.model('Book', BookSchema)
