@@ -22,7 +22,10 @@ const BookSchema = new Schema({
     description: {
         type: String,
     },
-    userExperiences: Array,
+    userExperiences: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserExperiences"
+    }],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

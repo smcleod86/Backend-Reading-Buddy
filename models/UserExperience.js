@@ -10,7 +10,7 @@ let UserExperienceSchema = new mongoose.Schema({
     review: String,
     status: {
         type: String,
-        validate: /^wishlist$|^started$|^finished$/, //this validation is not currently working
+        validate: /^wishlist$|^started$|^finished$/,
         required: true
     },
     date_started: Date,

@@ -17,10 +17,21 @@ router.get('/test', function(req, res) {
     res.json({msg: "Users route working"})
 })
 //Get a user by id for profiles
-router.get('/user/:id', (req, res) => {
-    User.findById({ id: req.params.id })
+router.get('/:id', (req, res) => {
+    User.findOne({_id: req.params.id})
+        .populate({
+            path: 'userExperiences',
+            populate: 'bookId'
+        })
         .then(user => {
-            Book.find({ userId: user.id })
+            res.send({user})
+        })
+        .catch(err => {
+            res.send({error: `Error getting user: ${err}`});
+        })    
+    /*  old version
+        .then(user => {        
+              Book.find({ userId: user.id })
                 .then(userBooks => {
                     UserExperience.find({ userId: user.id})
                         .then(foundUserExperience => {
@@ -37,6 +48,7 @@ router.get('/user/:id', (req, res) => {
         .catch(err => {
             console.log(`Error finding User: ${err}`)
         })
+        */
 })
 
 router.get('/', (req,res) => {
