@@ -9,7 +9,7 @@ const passport = require('passport')
 // load User model
 const User = require('../models/User')
 const Book = require('../models/Book')
-const UserExperience = require('../models/UserExperience')
+const ReaderExperience = require('../models/ReaderExperience')
 
 //API ROUTES
 //user test route
@@ -20,8 +20,8 @@ router.get('/test', function(req, res) {
 router.get('/:id', (req, res) => {
     User.findOne({_id: req.params.id})
         .populate({
-            path: 'userExperiences',
-            populate: 'bookId'
+            path: 'readerExperiences',
+            populate: 'book'
         })
         .then(user => {
             res.send({user})
@@ -33,12 +33,12 @@ router.get('/:id', (req, res) => {
         .then(user => {        
               Book.find({ userId: user.id })
                 .then(userBooks => {
-                    UserExperience.find({ userId: user.id})
-                        .then(foundUserExperience => {
-                            res.send({user}, {userBooks}, {foundUserExperience})
+                    ReaderExperience.find({ userId: user.id})
+                        .then(foundReaderExperience => {
+                            res.send({user}, {userBooks}, {foundReaderExperience})
                         })
                         .catch(err => {
-                            console.log(`Error finding UserExperiences: ${err}`)
+                            console.log(`Error finding ReaderExperiences: ${err}`)
                         })
                 })
                 .catch(err => {
