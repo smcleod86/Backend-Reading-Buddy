@@ -23,9 +23,9 @@ const UserSchema = new Schema({
       type: String,
       required: true,
     },
-    userExperiences:  [{
+    readerExperiences:  [{
       type: mongoose.Schema.Types.ObjectId, 
-      ref: "UserExperience"
+      ref: "ReaderExperience"
     }],
     friends: [{
       type: mongoose.Schema.Types.ObjectId,

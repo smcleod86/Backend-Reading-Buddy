@@ -22,9 +22,9 @@ const BookSchema = new Schema({
     description: {
         type: String,
     },
-    userExperiences: [{
+    readerExperiences: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserExperiences"
+        ref: "ReaderExperiences"
     }],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
