@@ -39,6 +39,16 @@ router.get('/user/:id', (req, res) => {
         })
 })
 
+router.get('/', (req,res) => {
+    User.find(req.query)
+        .then(searchResults => {
+            res.send({searchResults})
+        })
+        .catch(err => {
+            res.send({error: `Error searching user names: ${err}`})
+        })
+})
+
 
 //GET route to handle registration
 router.post('/register', (req, res) => {
