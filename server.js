@@ -42,7 +42,7 @@ app.use(passport.initialize())
 //setup routes
 //app.use('/users', users)
 app.use('/UserExperiences', userExperiences);
-app.use("/books", books);
-
+app.use('/books', books);
+app.use('/users', users)
 //start server
 app.listen(process.env.PORT || 3001, () => console.log(`Server is running on ${process.env.PORT} and things are smooth`))
