@@ -18,10 +18,14 @@ router.get('/test', function(req, res) {
 })
 //Get a user by id for profiles
 router.get('/:id', (req, res) => {
+    console.log("In users.js get /:id method")
     User.findOne({_id: req.params.id})
         .populate({
             path: 'readerExperiences',
             populate: 'book'
+        })
+        .populate({
+            path: 'friends'
         })
         .then(user => {
             res.send({user})
@@ -29,26 +33,48 @@ router.get('/:id', (req, res) => {
         .catch(err => {
             res.send({error: `Error getting user: ${err}`});
         })    
-    /*  old version
-        .then(user => {        
-              Book.find({ userId: user.id })
-                .then(userBooks => {
-                    ReaderExperience.find({ userId: user.id})
-                        .then(foundReaderExperience => {
-                            res.send({user}, {userBooks}, {foundReaderExperience})
-                        })
-                        .catch(err => {
-                            console.log(`Error finding ReaderExperiences: ${err}`)
-                        })
-                })
-                .catch(err => {
-                    console.log(`Error finding user Books: ${err}`)
-                })
-        })
-        .catch(err => {
-            console.log(`Error finding User: ${err}`)
-        })
-        */
+    /*  
+        /users/:id returns an object with this structure:
+        {
+            _id: blah,                  // the id of the user whose information is below
+            first_name: blah,
+            last_name: blah,
+            user_name: blah,
+            email: blah,
+            friends: [                  // a list of your friends' user objects
+                {
+                    _id: blah,
+                    first_name: blah,
+                    last_name: blah,
+                    user_name: blah,
+                    email: blah,
+                }
+            ],
+            readerExperiences: [        // a list of your readerExperiences
+                {
+                    _id: blah,          // the id of this readerExperience
+                    rating: blah,
+                    review: blah,
+                    status: "wishlist" or "started" or "finished"
+                    date_started: some date,
+                    date_finished: some date,
+                    book: {             // the book this experience is about
+                        _id: blah       // the id of the book in the database
+                        api_id: blah,   // the id of the book on Google Books
+                        title: blah,
+                        author: blah,
+                        genre: blah,
+                        image_url: blah,
+                        description: blah,
+                        readerExperiences: [ a list of ids of all the other readerExperience for this book]
+
+                    }
+                }
+            ]
+            }
+        }
+
+    */
 })
 
 router.get('/', (req,res) => {

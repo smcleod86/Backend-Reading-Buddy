@@ -7,11 +7,11 @@ const ReaderExperience = require('../models/ReaderExperience');
 const Book = require('../models/Book');
 const User = require('../models/User');
 
-router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: {title: XXX, author: XXX, etc}, readerExperienceInfo: {rating: X, status: XXXX, etc}}
+router.post('/', (req,res) => {     // assumes req.body structure of {req.query: {title: XXX, author: XXX, etc}, req.body: {status: XXXX, user: XXX}}
 
     const createReaderExperience = (bookId) => {    // will be called later in the route, depending on whether the relevant Book is found or created
-        req.body.readerExperienceInfo.book = bookId;
-        ReaderExperience.create(req.body.readerExperienceInfo) 
+        req.body.book = bookId;
+        ReaderExperience.create(req.body) 
         // may want to refactor later to make sure bookId&userId combo is unique, so that user doesn't accidentally review the same book twice
         .then(createdReaderExperience => {
             Book.findOneAndUpdate({_id: createdReaderExperience.book}, {$push: {readerExperiences: createdReaderExperience._id}})
@@ -41,7 +41,7 @@ router.post('/', (req,res) => {     // assumes req.body structure of {bookInfo: 
             if (foundBook){
                 createReaderExperience(foundBook._id);
             } else {              
-                Book.create(req.body.bookInfo)
+                Book.create(req.query)
                     .then(createdBook => {
                         createReaderExperience(createdBook._id);
                     })
