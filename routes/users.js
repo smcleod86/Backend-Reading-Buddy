@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
 // load User model
-const User = require('../models/User')
-const Book = require('../models/Book')
-const ReaderExperience = require('../models/ReaderExperience')
+const User = require('../lib/models/User')
+const Book = require('../lib/models/Book')
+const ReaderExperience = require('../lib/models/ReaderExperience')
 
 //API ROUTES
 //user test route

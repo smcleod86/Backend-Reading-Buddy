@@ -3,9 +3,9 @@ const router = express.Router()
 
 //const db = require('../../models')
 
-const ReaderExperience = require('../models/ReaderExperience');
-const Book = require('../models/Book');
-const User = require('../models/User');
+const ReaderExperience = require('../lib/models/ReaderExperience');
+const Book = require('../lib/models/Book');
+const User = require('../lib/models/User');
 
 router.post('/', (req,res) => {     // assumes req.body structure of {req.query: {title: XXX, author: XXX, etc}, req.body: {status: XXXX, user: XXX}}
 

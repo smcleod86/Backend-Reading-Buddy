@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const readerExperience = require("../models/ReaderExperience");
-const Book = require("../models/Book");
-const User = require("../models/User");
+const readerExperience = require("../lib/models/ReaderExperience");
+const Book = require("../lib/models/Book");
+const User = require("../lib/models/User");
 
 router.get("/:api_id", (req,res) => {
     Book.find({title: req.query.title, author: req.query.author}) // we want reviews for all editions of the book, not just the one specified by req.params.api_id
