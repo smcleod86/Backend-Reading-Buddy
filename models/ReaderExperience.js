@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-
-let ReaderExperienceSchema = new mongoose.Schema({
+const ReaderExperienceSchema = new Schema({
     rating: {
         type: Number,
         minimum: 0,
@@ -27,7 +27,7 @@ let ReaderExperienceSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('ReaderExperience', ReaderExperienceSchema);
+module.exports = ReaderExperience = mongoose.model('ReaderExperience', ReaderExperienceSchema);
 
 // May want to add validations later, say to make sure no one reviews books they haven't read, or to add finished status when people provide a date_finished
 // will have to coordinate with front end peeps
