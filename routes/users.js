@@ -20,14 +20,17 @@ router.get('/test', function(req, res) {
 router.get('/:id', (req, res) => {
     console.log("In users.js get /:id method")
     User.findOne({_id: req.params.id})
-        .populate({
-            path: 'readerExperiences',
-            populate: 'book'
-        })
-        .populate({
-            path: 'friends'
-        })
+        .populate([
+            {
+                path: 'readerExperiences',
+                model: 'ReaderExperience'
+            }, {
+                path: 'friends',
+                model: 'User'
+            }
+        ])
         .then(user => {
+            console.log(`populated user: ${user}`)
             res.send({user})
         })
         .catch(err => {
@@ -183,3 +186,10 @@ router.post('/login', function(req, res) {
 //GET log people in and check their credentials against existing User data
 //GET if already logged in, set user data to current
 module.exports = router
+/*
+,
+                populate: {
+                    path: 'book',
+                    model: 'Book'
+                }
+*/
