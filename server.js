@@ -24,25 +24,19 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-//connect mongo db
-const uri = process.env.MONGODB_URI
-const MongoClient = require('mongodb').MongoClient;
+const uri = process.env.MONGOD_URI
 
+// connect to db
+const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(uri, { useNewUrlParser: true });
-    client.connect(err => {
+client.connect(err => {
     const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
+  // perform actions on the collection object
     client.close();
 });
-//connect Mongodb
-mongoose.connect(uri)
-    .then(() => console.log('MongoDB connected... ✅'))
-    .catch(err => console.log(err))
 
-//test route
-app.get('/', function(req, res) {
-    res.send('Hello lovely person!\n Server is up and running')
-})
+mongoose.connect(uri).then((() => console.log('MONGOOSE CONNECTED'))).catch(error => console.log(error))
+
 
 app.use(passport.initialize())
 //TODO: make config folder and passport page
