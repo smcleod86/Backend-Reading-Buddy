@@ -24,7 +24,7 @@ const BookSchema = new Schema({
     },
     readerExperiences: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "ReaderExperience"
+        ref: "ReaderExperiences"
     }]
 })
 
